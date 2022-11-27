@@ -16,3 +16,14 @@ public class GamePanel extends JPanel implements ActionListener{
 	final int y[] = new int[GAME_UNITS];
 
 	int bodyParts = 5; //set badan ular menjadi 5 blok
+	boolean running = false;
+	
+	GamePanel(){
+		this.setPreferredSize(new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT));
+		this.setBackground(Color.black);
+		this.setFocusable(true);
+		startGame();
+	}
+	public void startGame() {
+		running = true;
+	}
