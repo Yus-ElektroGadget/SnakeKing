@@ -18,6 +18,11 @@ public class GamePanel extends JPanel implements ActionListener{
 	int bodyParts = 5; //set badan ular menjadi 5 blok
 	boolean running = false;
 	
+	//Deklarasi Makanan
+	int apples;
+	int Orange;
+	int pir;
+	
 	GamePanel(){
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT));
 		this.setBackground(Color.black);
@@ -45,3 +50,4 @@ public class GamePanel extends JPanel implements ActionListener{
 		g.drawString("Game Over", (SCREEN_WIDTH - metrics2.stringWidth("Game Over"))/2, SCREEN_HEIGHT/2);
 
 	}
+	
