@@ -19,11 +19,18 @@ public class GamePanel extends JPanel implements ActionListener{
 	boolean running = false;
 	
 	//Deklarasi Makanan
-	int apples;
-	int Orange;
-	int pir;
+	int applesEaten;
+	int appleX;
+	int appleY;
+	int OrangeX;
+	int OrangeY;
+	int PirX;
+	int PirY;
+
+	Random random;
 	
 	GamePanel(){
+		random = new Random(); //set random
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT));
 		this.setBackground(Color.black);
 		this.setFocusable(true);
@@ -31,11 +38,114 @@ public class GamePanel extends JPanel implements ActionListener{
 	}
 	public void startGame() {
 		running = true;
+			newApple();
 	}
-	public void gameOver(Graphics g) {
+	public void paintComponent(Graphics g) { //deklarasi Graphics2D
+		super.paintComponent(g);
+		draw(g);
+	}
+	
+	public void draw(Graphics g) {
 		
-		//Tambah SFX
-		gOver.play();
+		if(running) { //jika berjalan true
+
+			//Set bentuk dan warna makanan
+			g.setColor(Color.red);
+			g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
+		
+            		g.setColor(Color.blue);
+			g.fillRect(OrangeX, OrangeY, UNIT_SIZE, UNIT_SIZE);
+
+           		g.setColor(Color.yellow);
+			g.fillOval(PirX, PirY, UNIT_SIZE, UNIT_SIZE);
+
+			g.setColor(Color.yellow);
+			g.fillOval(PirX, PirY, UNIT_SIZE, UNIT_SIZE);
+
+
+			//Tubuh Ular
+			for(int i = 0; i< bodyParts;i++) { //selama i kurang dari bodyparts maka i bertambah +1
+				if(i == 0) {
+					g.setColor(Color.green);
+					g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+				}
+				else {
+					g.setColor(new Color(45,180,0));
+					g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+				}			
+			}
+			//Tampilan score
+			g.setColor(Color.red); //set warna
+			g.setFont( new Font("Ink Free",Font.BOLD, 40));
+			FontMetrics metrics = getFontMetrics(g.getFont());
+
+			//tampilkan score
+			g.drawString("Score: "+applesEaten, (SCREEN_WIDTH - metrics.stringWidth("Score: "+applesEaten))/2, g.getFont().getSize());
+		}
+		else { //jika running false
+			gameOver(g); //tampilkan gameOver
+		}
+		
+	}
+	
+		public void newApple(){
+			appleX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE; //set random array x yang dimana (W x H) * Unit size
+			appleY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE))*UNIT_SIZE; //set random array y
+		}
+		public void newOrange(){
+			OrangeX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
+			OrangeY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE))*UNIT_SIZE;
+		}
+		public void newPir(){
+			PirX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
+			PirY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE))*UNIT_SIZE;
+		}
+		//makanan 1 warna merah
+		public void checkApple() { 
+			if((x[0] == appleX) && (y[0] == appleY)) { //jika koordinat makanan dan kepala ular sama
+				bodyParts++;  //badan ular +1
+				applesEaten++; //tambah point +1
+				//Random Makanan
+				int ListMakanan = (int)(Math.random() * 2); //Generate random makanan
+				if(ListMakanan == 0){
+					newPir(); 			//new adalah fungsi spawn
+					newApple();
+
+				}
+				else if(ListMakanan == 1){
+					newOrange();
+					newApple();
+
+
+				}
+			}
+		}
+				//Makanan 2 Kuning bulat
+				public void checkPir() {
+					if((x[0] == PirX) && (y[0] == PirY)) { //jika koordinat makanan dan kepala ular sama
+						bodyParts++; //badan ular +1
+						bodyParts++; 
+						applesEaten++; //tambah point +1
+						applesEaten++;
+
+						newApple();
+
+					}
+				}
+				
+				//Makanan 3 biru kotak
+				public void checkOrange() {
+					if((x[0] == OrangeX) && (y[0] == OrangeY)) {
+						bodyParts--;	//badan ular -1
+						applesEaten--;	//kurangi point -1
+			
+						newApple(); //spawn apple
+			
+						
+					}
+				}
+	
+	public void gameOver(Graphics g) {
 
 		//Tampilkan Score akhir
 		g.setColor(Color.red);
@@ -50,4 +160,16 @@ public class GamePanel extends JPanel implements ActionListener{
 		g.drawString("Game Over", (SCREEN_WIDTH - metrics2.stringWidth("Game Over"))/2, SCREEN_HEIGHT/2);
 
 	}
-	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		if(running) { //jika running true maka akan menampilkan perintah dibawah
+		
+			checkApple();
+            checkOrange();
+            checkPir();
+
+		}
+		repaint();
+	}
+}
