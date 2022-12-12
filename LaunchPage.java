@@ -84,7 +84,7 @@ public class LaunchPage implements ActionListener{
    }
 
    if(e.getSource()==Exit) {
-    //Tambah SFX
+
    
     frame.dispose();
     System.exit(0);
