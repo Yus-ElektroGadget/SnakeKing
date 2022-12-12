@@ -72,7 +72,8 @@ public class LaunchPage implements ActionListener{
  public void actionPerformed(ActionEvent e) {
   
   if(e.getSource()==Play) {
-
+    frame.dispose();
+    new GameFrame();
   }
   if(e.getSource()==Help) {
 
