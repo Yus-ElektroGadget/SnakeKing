@@ -20,12 +20,19 @@ public class GamePanel extends JPanel implements ActionListener{
 	
 	//Deklarasi Makanan
 	int applesEaten;
+  	int OrangesEaten;
 	int appleX;
 	int appleY;
-	int OrangeX;
-	int OrangeY;
-	int PirX;
-	int PirY;
+    	int OrangeX;
+   	int OrangeY;
+   	int PirX;
+    	int PirY;
+	int whiteX;
+	int whiteY;
+	int grayX;
+	int grayY;
+	int DeadX;
+	int DeadY;
 
 	Random random;
 	
