@@ -100,6 +100,60 @@ public class GamePanel extends JPanel implements ActionListener{
 		}
 		
 	}
+	/*********************Makanan***********************/
+
+	//Sistem Spawn makanan
+	public void newApple(){
+		appleX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE; //set random array x yang dimana (W x H) * Unit size
+		appleY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE))*UNIT_SIZE; //set random array y
+	}
+	public void newOrange(){
+		OrangeX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
+		OrangeY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE))*UNIT_SIZE;
+	}
+	public void newPir(){
+		PirX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
+		PirY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE))*UNIT_SIZE;
+	}
+	public void newWhite(){
+		whiteX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
+		whiteY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE))*UNIT_SIZE;
+	}
+	public void newGray(){
+		grayX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
+		grayY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE))*UNIT_SIZE;
+	}
+	public void newDead (){
+		DeadX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
+		DeadY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE))*UNIT_SIZE;
+	}
+
+
+	public void notSpawnOrange(){
+		//Makanan Orange Hilang
+		OrangeX = 1400;
+		OrangeY = 780;
+	}
+	public void notSpawnPir(){
+		//Makanan Pir Hilang
+		PirX = 1400;
+		PirY = 780;
+	}
+	public void notSpawnWhite(){
+		//Makanan Pir Hilang
+		whiteX = 1400;
+		whiteY = 780;
+	}
+	public void notSpawnGray(){
+		//Makanan Gray Hilang
+		grayX = 1400;
+		grayY = 780;
+	}
+	public void notSpawnDead(){
+		//Makanan kematian Hilang
+		DeadX = 1400;
+		DeadY = 780;
+	}
 	
 		public void newApple(){
 			appleX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE; //set random array x yang dimana (W x H) * Unit size
