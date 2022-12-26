@@ -18,7 +18,11 @@ public class GamePanel extends JPanel implements ActionListener{
 	int bodyParts = 5; //set badan ular menjadi 5 blok
 	
 	
-	
+	//Deklarasi Suara
+	public Sound button = new Sound("file:audio/button.wav");
+	public Sound eatBuff = new Sound("file:audio/eatBuff.wav");
+	public Sound eat = new Sound("file:audio/eat.wav");
+	public Sound gOver = new Sound("file:audio/gOver.wav");
 	//timer
 	JLabel timeLabel = new JLabel();
 	int elapsedTime = 0;
@@ -159,10 +163,11 @@ public class GamePanel extends JPanel implements ActionListener{
 			FontMetrics metrics = getFontMetrics(g.getFont());
 
 			//tampilkan score
-			g.drawString("Score: "+applesEaten, (SCREEN_WIDTH - metrics.stringWidth("Score: "+applesEaten))/2, g.getFont().getSize());
+			g.drawString("Score: "+applesEaten, (SCREEN_WIDTH - metrics.stringWidth("Score: "+applesEaten))/4, g.getFont().getSize());
 		}
 		else { //jika running false
 			gameOver(g); //tampilkan gameOver
+			timer1.stop();
 		}
 		
 	}
@@ -250,19 +255,73 @@ public class GamePanel extends JPanel implements ActionListener{
 			if((x[0] == appleX) && (y[0] == appleY)) { //jika koordinat makanan dan kepala ular sama
 				bodyParts++;  //badan ular +1
 				applesEaten++; //tambah point +1
+				newGray(); //spawn makanan gray
+			
+				eat.play(); //play suara
 				//Random Makanan
-				int ListMakanan = (int)(Math.random() * 2); //Generate random makanan
+				int ListMakanan = (int)(Math.random() * 7); //Generate random makanan
 				if(ListMakanan == 0){
 					newPir(); 			//new adalah fungsi spawn
 					newApple();
-
+					notSpawnOrange();	//notSpawn adalah fungsi tidak spawn
+					notSpawnWhite();
+					notSpawnGray();
+					notSpawnDead();
 				}
 				else if(ListMakanan == 1){
 					newOrange();
 					newApple();
 
-
+					notSpawnPir();
+					notSpawnWhite();
+					notSpawnGray();
+					notSpawnDead();
 				}
+				else if(ListMakanan == 2){
+					newOrange();
+					newPir();
+					newApple();
+					newWhite();
+					newDead();
+			}
+			else if(ListMakanan == 3){
+					newApple();
+
+					notSpawnOrange();
+					notSpawnPir();
+					notSpawnWhite();
+					notSpawnGray();
+					notSpawnDead();
+			}
+			else if(ListMakanan == 4){
+					newWhite();
+					newApple();
+
+					notSpawnOrange();
+					notSpawnPir();
+					notSpawnGray();
+					notSpawnDead();
+					notSpawnDead();
+			}
+			else if(ListMakanan == 5){
+					newGray();
+					newApple();
+
+					notSpawnOrange();
+					notSpawnPir();
+					notSpawnWhite();
+					notSpawnDead();
+				
+			}
+			else if(ListMakanan == 6){
+					newDead();
+					newApple();
+
+					notSpawnOrange();
+					notSpawnPir();
+					notSpawnWhite();
+					notSpawnGray();
+			}
 			}
 		}
 				//Makanan 2 Kuning bulat
@@ -272,9 +331,17 @@ public class GamePanel extends JPanel implements ActionListener{
 						bodyParts++; 
 						applesEaten++; //tambah point +1
 						applesEaten++;
-
+						
+						notSpawnOrange(); //set jangan spawn makanan ketika makan makanan
+						notSpawnPir();	  //tipe buff
+						notSpawnWhite();
+						notSpawnGray();
+						
 						newApple();
+						eat.play(); //putar sound
 
+						PirX = 1400;
+						PirY = 780;
 					}
 				}
 				
@@ -284,44 +351,51 @@ public class GamePanel extends JPanel implements ActionListener{
 						bodyParts--;	//badan ular -1
 						applesEaten--;	//kurangi point -1
 			
+						notSpawnOrange();
+						notSpawnPir();
+						notSpawnWhite();
+						notSpawnGray();
+			
 						newApple(); //spawn apple
+
+						eatBuff.play(); //putar sound
 			
 						
 					}
 				}
-	//Makanan 4 putih kotak
-    public void checkWhite() {
-		if((x[0] == whiteX) && (y[0] == whiteY)) {
-			DELAY = 130; //kurangi delay agar ular bisa bergerak cepat
-			timer.stop(); //timer stop untuk reset kecepatan ular sebelumnya
-			startGame(); //mulai kembali			
+				//Makanan 4 putih kotak
+   		 		public void checkWhite() {
+					if((x[0] == whiteX) && (y[0] == whiteY)) {
+						DELAY = 130; //kurangi delay agar ular bisa bergerak cepat
+						timer.stop(); //timer stop untuk reset kecepatan ular sebelumnya
+						startGame(); //mulai kembali			
 			
-			notSpawnOrange();
-			notSpawnPir();
-			notSpawnWhite();
-			notSpawnGray();
-			
-			newApple();
+						notSpawnOrange();
+						notSpawnPir();
+						notSpawnWhite();
+						notSpawnGray();
 
-			
+						newApple();
+
+						eatBuff.play(); //putar sound
 		}
 	}
 
-	//Makanan 5 abu-abu kotak
-    public void checkGray() {
-		if((x[0] == grayX) && (y[0] == grayY)) {
-			DELAY = 175; //tambah delay agar ular bisa bergerak ke semula (normal)
-			timer.stop();
-			startGame();			
-			
-			notSpawnOrange();
-			notSpawnPir();
-			notSpawnWhite();
-			notSpawnGray();
-			
-			newApple();
+				//Makanan 5 abu-abu kotak
+				 public void checkGray() {
+					if((x[0] == grayX) && (y[0] == grayY)) {
+						DELAY = 175; //tambah delay agar ular bisa bergerak ke semula (normal)
+						timer.stop();
+						startGame();			
 
-			
+						notSpawnOrange();
+						notSpawnPir();
+						notSpawnWhite();
+						notSpawnGray();
+
+						newApple();
+
+						eatBuff.play(); //putar sound
 		}
 	}
 	//Makanan 6 ungu kotak
@@ -368,7 +442,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		g.setColor(Color.red);
 		g.setFont( new Font("Ink Free",Font.BOLD, 40));
 		FontMetrics metrics1 = getFontMetrics(g.getFont());
-		g.drawString("Score: "+applesEaten, (SCREEN_WIDTH - metrics1.stringWidth("Score: "+applesEaten))/2, g.getFont().getSize());
+		g.drawString("Score: "+applesEaten, (SCREEN_WIDTH - metrics1.stringWidth("Score: "+applesEaten))/4, g.getFont().getSize());
 		
 		//Game Over text
 		g.setColor(Color.red);
