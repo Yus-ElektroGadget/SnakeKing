@@ -100,6 +100,30 @@ public class GamePanel extends JPanel implements ActionListener{
 		}
 		
 	}
+	/**********************Sistem ular bergerak*********************/
+
+	public void move(){ //mekanisme ular bergerak
+		for(int i = bodyParts;i>0;i--) { // jika i lebih besar dari 0 maka i akan berkurang 1
+			x[i] = x[i-1]; //set array x = i-1
+			y[i] = y[i-1]; //set array y = i-1
+		}
+		
+		switch(direction) { //mekanisme arah ular
+		case 'U': //jika ular berjalan keatas
+			y[0] = y[0] - UNIT_SIZE; //array y index 0 - unit size 50
+			break;
+		case 'D': //jika ular berjalan kebawah
+			y[0] = y[0] + UNIT_SIZE; //array y index 0 + unit size 50
+			break;
+		case 'L': //jika ular berjalan kekiri
+			x[0] = x[0] - UNIT_SIZE; //array x index 0 - unit size 50
+			break;
+		case 'R': //jika ular berjalan kekanan
+			x[0] = x[0] + UNIT_SIZE; //array x index 0 + unit size 50
+			break;
+		}
+		
+	}
 	/*********************Makanan***********************/
 
 	//Sistem Spawn makanan
