@@ -15,7 +15,8 @@ public class LaunchPage implements ActionListener{
  JButton Credit = new JButton("Credit");
  JButton Help   = new JButton("Help");
 
-
+//Deklarasi SFX
+public Sound button = new Sound("file:audio/button.wav");
 
  LaunchPage(){
   frame.setTitle("Main Menu");
@@ -65,13 +66,32 @@ public class LaunchPage implements ActionListener{
   frame.setLayout(null);
   frame.setVisible(true);
 
+ //Text Mari bang
+   JLabel tutorText2 = new JLabel(); //create a label
+   tutorText2.setText("Mari Bermain dengan GEMBIRA!!!"); //set text of label
+   tutorText2.setForeground(new Color(104, 67, 99)); //set font color of text
+   tutorText2.setFont(new Font("MV Boli",Font.PLAIN,20)); //set font of text 
+   tutorText2.setSize(1300,750); 
+   tutorText2.setBounds(0,-285,1300,750);
+   frame.add(tutorText2);
  
+ 
+   // Text Copyright
+   JLabel tutorText = new JLabel(); //create a label
+   tutorText.setText("@Free Copyright By Kelompok 5"); //set text of label
+   tutorText.setForeground(new Color(0x00FF00)); //set font color of text
+   tutorText.setFont(new Font("MV Boli",Font.PLAIN,25)); //set font of text 
+   tutorText.setSize(1300,750); 
+   tutorText.setBounds(900,310,1300,750);
+   frame.add(tutorText);
  }
 
  @Override
  public void actionPerformed(ActionEvent e) {
   
   if(e.getSource()==Play) {
+     //Tambah SFX
+    button.play();
     frame.dispose();
     new GameFrame();
   }
@@ -85,7 +105,8 @@ public class LaunchPage implements ActionListener{
 
    if(e.getSource()==Exit) {
 
-   
+   //Tambah SFX
+    button.play();
     frame.dispose();
     System.exit(0);
 
