@@ -16,7 +16,36 @@ public class GamePanel extends JPanel implements ActionListener{
 	final int y[] = new int[GAME_UNITS];
 
 	int bodyParts = 5; //set badan ular menjadi 5 blok
-	boolean running = false;
+	
+	
+	
+	//timer
+	JLabel timeLabel = new JLabel();
+	int elapsedTime = 0;
+	int seconds =0;
+	int minutes =0;
+	int hours =0;
+	boolean started = false;
+	String seconds_string = String.format("%02d", seconds);
+	String minutes_string = String.format("%02d", minutes);
+	String hours_string = String.format("%02d", hours);
+	
+	Timer timer1 = new Timer(1000, new ActionListener() {
+  
+ 	 public void actionPerformed(ActionEvent e) {
+   
+	elapsedTime=elapsedTime+1000;
+	hours = (elapsedTime/3600000);
+	minutes = (elapsedTime/60000) % 60;
+	seconds = (elapsedTime/1000) % 60;
+	seconds_string = String.format("%02d", seconds);
+	minutes_string = String.format("%02d", minutes);
+	hours_string = String.format("%02d", hours);
+	timeLabel.setText(hours_string+":"+minutes_string+":"+seconds_string);
+	
+	}
+  
+ });
 	
 	//Deklarasi Makanan
 	int applesEaten;
@@ -33,19 +62,50 @@ public class GamePanel extends JPanel implements ActionListener{
 	int grayY;
 	int DeadX;
 	int DeadY;
+	
+	char direction = 'R'; //set arah pertama ular bergerak pada saat GamePanel berjalan
+	boolean running = false;
 
+	Timer timer;
 	Random random;
+	
+	
+	Image apple,reaper,pisang,cherry,jeruk,mangga;
+	Image kayu;
+	Image head,body;
 	
 	GamePanel(){
 		random = new Random(); //set random
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT));
 		this.setBackground(Color.black);
 		this.setFocusable(true);
+		this.addKeyListener(new MyKeyAdapter()); //set keylistener agar bisa mendengar input dari keyboard
+
+		apple = new ImageIcon("image/apel1.png").getImage();
+		reaper = new ImageIcon("image/tengkorak1.png").getImage();
+		pisang = new ImageIcon("image/pisang1.png").getImage();
+		cherry = new ImageIcon("image/chery1.png").getImage();
+		jeruk = new ImageIcon("image/orange1.png").getImage();
+		mangga = new ImageIcon("image/mangga1.png").getImage();
+		kayu = new ImageIcon("image/bg1.png").getImage();
+		head = new ImageIcon("image/head1.png").getImage();
+		body = new ImageIcon("image/body1.png").getImage();
 		startGame();
 	}
 	public void startGame() {
-		running = true;
-			newApple();
+		timer1.start();
+		newApple();
+
+		//Set makanan lain agar tidak keluar terlebih dahulu
+       		notSpawnPir();
+        	notSpawnOrange();
+		notSpawnWhite();
+		notSpawnGray();
+		notSpawnDead();
+
+		running = true; //mekanisme ular akan berjalan
+		timer = new Timer(DELAY,this); //jika value timer semakin besar, maka akan semakin cepat ular bergerak
+		timer.start(); //timer berjalan true
 	}
 	public void paintComponent(Graphics g) { //deklarasi Graphics2D
 		super.paintComponent(g);
@@ -55,8 +115,14 @@ public class GamePanel extends JPanel implements ActionListener{
 	public void draw(Graphics g) {
 		
 		if(running) { //jika berjalan true
-
 			g.drawImage(kayu, 0, 0, null);
+			//timer
+			timeLabel.setText(hours_string+":"+minutes_string+":"+seconds_string);
+			timeLabel.setFont(new Font("Verdana",Font.PLAIN,35));
+			timeLabel.setBorder(BorderFactory.createBevelBorder(1));
+			timeLabel.setOpaque(true);
+			this.add(timeLabel);
+
 			//timer
 			timeLabel.setText(hours_string+":"+minutes_string+":"+seconds_string);
 			timeLabel.setFont(new Font("Verdana",Font.PLAIN,35));
@@ -176,21 +242,9 @@ public class GamePanel extends JPanel implements ActionListener{
 	public void notSpawnDead(){
 		//Makanan kematian Hilang
 		DeadX = 1400;
-		DeadY = 780;
+		DeadY = 700;
 	}
 	
-		public void newApple(){
-			appleX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE; //set random array x yang dimana (W x H) * Unit size
-			appleY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE))*UNIT_SIZE; //set random array y
-		}
-		public void newOrange(){
-			OrangeX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
-			OrangeY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE))*UNIT_SIZE;
-		}
-		public void newPir(){
-			PirX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
-			PirY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE))*UNIT_SIZE;
-		}
 		//makanan 1 warna merah
 		public void checkApple() { 
 			if((x[0] == appleX) && (y[0] == appleY)) { //jika koordinat makanan dan kepala ular sama
@@ -249,7 +303,7 @@ public class GamePanel extends JPanel implements ActionListener{
 			
 			newApple();
 
-			eatBuff.play(); //putar sound
+			
 		}
 	}
 
@@ -267,7 +321,7 @@ public class GamePanel extends JPanel implements ActionListener{
 			
 			newApple();
 
-			eatBuff.play(); // putar sound
+			
 		}
 	}
 	//Makanan 6 ungu kotak
@@ -327,11 +381,15 @@ public class GamePanel extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 
 		if(running) { //jika running true maka akan menampilkan perintah dibawah
-		
-			checkApple();
-            checkOrange();
-            checkPir();
-
+		move();
+		checkApple();
+           	checkOrange();
+            	checkPir();
+		checkWhite();
+		checkGray();
+		checkDead();
+			
+		checkCollisions();
 		}
 		repaint();
 	}
