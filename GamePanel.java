@@ -235,6 +235,48 @@ public class GamePanel extends JPanel implements ActionListener{
 						
 					}
 				}
+	//Makanan 4 putih kotak
+    public void checkWhite() {
+		if((x[0] == whiteX) && (y[0] == whiteY)) {
+			DELAY = 130; //kurangi delay agar ular bisa bergerak cepat
+			timer.stop(); //timer stop untuk reset kecepatan ular sebelumnya
+			startGame(); //mulai kembali			
+			
+			notSpawnOrange();
+			notSpawnPir();
+			notSpawnWhite();
+			notSpawnGray();
+			
+			newApple();
+
+			eatBuff.play(); //putar sound
+		}
+	}
+
+	//Makanan 5 abu-abu kotak
+    public void checkGray() {
+		if((x[0] == grayX) && (y[0] == grayY)) {
+			DELAY = 175; //tambah delay agar ular bisa bergerak ke semula (normal)
+			timer.stop();
+			startGame();			
+			
+			notSpawnOrange();
+			notSpawnPir();
+			notSpawnWhite();
+			notSpawnGray();
+			
+			newApple();
+
+			eatBuff.play(); // putar sound
+		}
+	}
+	//Makanan 6 ungu kotak
+	public void checkDead() { 
+		if((x[0] == DeadX) && (y[0] == DeadY)) { 
+			running = false; // running = false akan mentrigger gameOver
+
+		}
+	}
 	/*******Mekanisme Collision********/
 
 	public void checkCollisions() {
