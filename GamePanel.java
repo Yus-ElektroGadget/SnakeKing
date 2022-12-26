@@ -157,7 +157,37 @@ public class GamePanel extends JPanel implements ActionListener{
 						
 					}
 				}
-	
+	/*******Mekanisme Collision********/
+
+	public void checkCollisions() {
+		//Jika kepala menabrak badan ular
+		for(int i = bodyParts;i>0;i--) {
+			if((x[0] == x[i])&& (y[0] == y[i])) {
+				running = false;
+			}
+		}
+		//Jika kepala ular menabrak border kiri frame
+		if(x[0] < 0) {
+			running = false;
+		}
+		//Jika kepala ular menabrak border kanan frame
+		if(x[0] > SCREEN_WIDTH) {
+			running = false;
+		}
+		//Jika kepala ular menabrak border atas frame
+		if(y[0] < 0) {
+			running = false;
+		}
+		//Jika kepala ular menabrak border bawah frame
+		if(y[0] > SCREEN_HEIGHT) {
+			running = false;
+		}
+
+		//Ular berhenti
+		if(!running) {
+			timer.stop();
+		}
+	}
 	public void gameOver(Graphics g) {
 
 		//Tampilkan Score akhir
@@ -184,5 +214,35 @@ public class GamePanel extends JPanel implements ActionListener{
 
 		}
 		repaint();
+	}
+	/*******Kontrol ular*******/
+
+
+	public class MyKeyAdapter extends KeyAdapter{ //untuk mendengan inputan dari keyboard
+		@Override
+		public void keyPressed(KeyEvent e) {
+			switch(e.getKeyCode()) {
+			case KeyEvent.VK_LEFT: 			//VK_LEFT adalah tombol arrow key  left <--
+				if(direction != 'R') { 		//jika arah tidak sama dengan arah R, maka arah berubah ke L
+					direction = 'L';
+				}
+				break;
+			case KeyEvent.VK_RIGHT:			//VK_RIGHT adalah tombol arrow key right -->		
+				if(direction != 'L') {		//jika arah tidak sama dengan arah L, maka arah berubah ke R
+					direction = 'R';
+				}
+				break;
+			case KeyEvent.VK_UP:			//VK_UP adalah tombol arrow key up
+				if(direction != 'D') {		//jika arah tidak sama dengan arah D, maka arah berubah ke U
+					direction = 'U';
+				}
+				break;
+			case KeyEvent.VK_DOWN:			//VK_DOWN adalah tombol arrow key down
+				if(direction != 'U') {		//jika arah tidak sama dengan arah U, maka arah berubah ke D
+					direction = 'D';
+				}
+				break;
+			}
+		}
 	}
 }
