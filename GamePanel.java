@@ -56,29 +56,35 @@ public class GamePanel extends JPanel implements ActionListener{
 		
 		if(running) { //jika berjalan true
 
+			g.drawImage(kayu, 0, 0, null);
+			//timer
+			timeLabel.setText(hours_string+":"+minutes_string+":"+seconds_string);
+			timeLabel.setFont(new Font("Verdana",Font.PLAIN,35));
+			timeLabel.setBorder(BorderFactory.createBevelBorder(1));
+			timeLabel.setOpaque(true);
+			this.add(timeLabel);
+
+
 			//Set bentuk dan warna makanan
-			g.setColor(Color.red);
-			g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
-		
-            		g.setColor(Color.blue);
-			g.fillRect(OrangeX, OrangeY, UNIT_SIZE, UNIT_SIZE);
+	
+			g.drawImage(apple, appleX, appleY, this);
+			g.drawImage(jeruk,OrangeX, OrangeY, this);
+			g.drawImage(pisang, PirX, PirY, this);
+			g.drawImage(cherry,whiteX, whiteY, this);
+			g.drawImage(mangga,grayX, grayY, this);
+			g.drawImage(reaper, DeadX, DeadY, this);
 
-           		g.setColor(Color.yellow);
-			g.fillOval(PirX, PirY, UNIT_SIZE, UNIT_SIZE);
-
-			g.setColor(Color.yellow);
-			g.fillOval(PirX, PirY, UNIT_SIZE, UNIT_SIZE);
 
 
 			//Tubuh Ular
 			for(int i = 0; i< bodyParts;i++) { //selama i kurang dari bodyparts maka i bertambah +1
 				if(i == 0) {
-					g.setColor(Color.green);
-					g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+					
+					g.drawImage(head,x[i], y[i], this);
 				}
 				else {
-					g.setColor(new Color(45,180,0));
-					g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+					g.setColor(Color.blue);
+					g.fillOval(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
 				}			
 			}
 			//Tampilan score
