@@ -26,3 +26,11 @@ public class Help implements ActionListener {
         ImageIcon image = new ImageIcon("image/snake.png"); // create an ImageIcon
         frame.setIconImage(image.getImage()); // change icon of frame
         
+        //Tambah Button Kembali
+        Exit.setBounds(40, 650, 200, 40);
+        Exit.setFocusable(false);
+        Exit.addActionListener(this);
+        frame.add(Exit);
+        
+        
+        
