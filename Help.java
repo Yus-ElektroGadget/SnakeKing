@@ -32,5 +32,14 @@ public class Help implements ActionListener {
         Exit.addActionListener(this);
         frame.add(Exit);
         
+        //Tambah Text Arrow
+        JLabel tutorText = new JLabel(); //create a label
+        tutorText.setText("Gunakan arrow pada keybord untuk mengontrol arah ular"); //set text of label
+        tutorText.setForeground(new Color(0, 0, 0)); //set font color of text
+        tutorText.setFont(new Font("Roboto", Font.PLAIN, 35)); //set font of text
+        tutorText.setSize(1300, 750);
+        tutorText.setBounds(300, -180, 1300, 750);
+           
+        
         
         
