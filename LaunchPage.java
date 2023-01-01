@@ -84,6 +84,15 @@ public Sound button = new Sound("file:audio/button.wav");
    tutorText.setSize(1300,750); 
    tutorText.setBounds(900,310,1300,750);
    frame.add(tutorText);
+     frame.getContentPane().setBackground(new Color(0x123456)); //change color of background
+   ImageIcon image = new ImageIcon("image/snake.png"); //create an ImageIcon
+   frame.setIconImage(image.getImage()); //change icon of frame
+   ImageIcon img = new ImageIcon("image/menuImage.png");
+   background = new JLabel(img);
+   background.setSize(1300,750);
+   background.setBounds(0,-100,1300,750);
+   background.setVisible(true);
+   frame.add(background);
  }
 
  @Override
