@@ -10,7 +10,7 @@ public class Help implements ActionListener {
     JLabel arrows, daftarMakanan;
     JFrame frame = new JFrame();
     JButton Exit = new JButton("Comeback");
-    
+    public Sound button = new Sound("file:audio/button.wav");
 
     Help() {
 
@@ -138,10 +138,8 @@ public class Help implements ActionListener {
             button.play();
             frame.dispose();
             new LaunchPage();
-
-        }
-
-    }
+        }
+    }
 
 }
            
