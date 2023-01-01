@@ -105,11 +105,19 @@ public Sound button = new Sound("file:audio/button.wav");
     new GameFrame();
   }
   if(e.getSource()==Help) {
+        //Tambah SFX
+        button.play();
 
+    frame.dispose();
+    new Help();
   }
    if(e.getSource()==Credit) {
 
-   
+        //Tambah SFX
+        button.play();
+
+    frame.dispose();
+    new Credit();
    }
 
    if(e.getSource()==Exit) {
